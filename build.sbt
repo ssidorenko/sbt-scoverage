@@ -1,8 +1,8 @@
 name := "sbt-scoverage"
 
-organization := "org.scoverage"
+organization := "ch.sidorenko.scoverage"
 
-version := "1.0.5-SNAPSHOT"
+version := "1.0.5-JS"
 
 scalaVersion := "2.10.4"
 
@@ -13,12 +13,17 @@ sbtPlugin := true
 resolvers += Resolver.mavenLocal
 
 libraryDependencies ++= Seq(
-  "org.scoverage" %% "scalac-scoverage-plugin" % "1.0.5-SNAPSHOT"
+  "ch.sidorenko.scoverage" %% "scalac-scoverage-plugin" % "1.0.5-JS"
 )
 
 
-publishTo := Some(Resolver.url("sbt-plugin-releases",
-  new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
+publishTo := {
+        val nexus = "https://oss.sonatype.org/"
+        if (isSnapshot.value)
+          Some(Resolver.sonatypeRepo("snapshots"))
+        else
+          Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    }
 
 publishMavenStyle := false
 
