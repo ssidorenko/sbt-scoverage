@@ -1,8 +1,10 @@
+import bintray.Keys._
+
 name := "sbt-scoverage"
 
 organization := "ch.sidorenko.scoverage"
 
-version := "1.0.5-JS"
+version := "1.0.5"
 
 scalaVersion := "2.10.4"
 
@@ -16,16 +18,14 @@ libraryDependencies ++= Seq(
   "ch.sidorenko.scoverage" %% "scalac-scoverage-plugin" % "1.0.5-JS"
 )
 
-
-publishTo := {
-        val nexus = "https://oss.sonatype.org/"
-        if (isSnapshot.value)
-          Some(Resolver.sonatypeRepo("snapshots"))
-        else
-          Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    }
-
 publishMavenStyle := false
+
+bintrayPublishSettings
+
+repository in bintray := "sbt-plugins"
+
+bintrayOrganization in bintray := None
+
 
 publishArtifact in Test := false
 
